@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "plugins": ["jest"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
+  "env": {
+    "jest": true,
+    "node": true
+  },
+  "rules": {
+    "node/file-extension-in-import": ["error", "always"]
+  }
+}
