@@ -11,21 +11,18 @@ const LOSE = 0;
  * @param {Buffer} input
  */
 export function parseInput(input) {
-  return input
-    .toString('utf-8')
-    .split(/\n/)
-    .map((s) => s.split(/\s+/));
+  return input.toString('utf-8').split(/\n/);
 }
 
 /**
  *
- * @param {string[][]} input
+ * @param {string[]} input
  * @param {{[key:string]: number;}} scoringTable
  */
 function calculateScore(input, scoringTable) {
   let score = 0;
   for (const gameRound of input) {
-    score += scoringTable[gameRound.join('')];
+    score += scoringTable[gameRound];
   }
 
   return score;
@@ -33,21 +30,21 @@ function calculateScore(input, scoringTable) {
 
 /**
  *
- * @param {string[][]} input
+ * @param {string[]} input
  */
 export function calculateGuessScore(input) {
   const scores = {
-    AX: ROCK + DRAW,
-    AY: PAPER + WIN,
-    AZ: SCISSORS + LOSE,
+    'A X': ROCK + DRAW,
+    'A Y': PAPER + WIN,
+    'A Z': SCISSORS + LOSE,
 
-    BX: ROCK + LOSE,
-    BY: PAPER + DRAW,
-    BZ: SCISSORS + WIN,
+    'B X': ROCK + LOSE,
+    'B Y': PAPER + DRAW,
+    'B Z': SCISSORS + WIN,
 
-    CX: ROCK + WIN,
-    CY: PAPER + LOSE,
-    CZ: SCISSORS + DRAW,
+    'C X': ROCK + WIN,
+    'C Y': PAPER + LOSE,
+    'C Z': SCISSORS + DRAW,
   };
 
   return calculateScore(input, scores);
@@ -55,21 +52,21 @@ export function calculateGuessScore(input) {
 
 /**
  *
- * @param {string[][]} input
+ * @param {string[]} input
  */
 export function calculateProperScore(input) {
   const scores = {
-    AX: SCISSORS + LOSE,
-    AY: ROCK + DRAW,
-    AZ: PAPER + WIN,
+    'A X': SCISSORS + LOSE,
+    'A Y': ROCK + DRAW,
+    'A Z': PAPER + WIN,
 
-    BX: ROCK + LOSE,
-    BY: PAPER + DRAW,
-    BZ: SCISSORS + WIN,
+    'B X': ROCK + LOSE,
+    'B Y': PAPER + DRAW,
+    'B Z': SCISSORS + WIN,
 
-    CX: PAPER + LOSE,
-    CY: SCISSORS + DRAW,
-    CZ: ROCK + WIN,
+    'C X': PAPER + LOSE,
+    'C Y': SCISSORS + DRAW,
+    'C Z': ROCK + WIN,
   };
 
   return calculateScore(input, scores);
