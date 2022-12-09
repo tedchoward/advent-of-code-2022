@@ -61,35 +61,24 @@ export function countTPositions(input) {
   const tHistory = new Set(['0,0']);
 
   for (const [direction, length] of input) {
-    switch (direction) {
-      case 'U':
-        for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
+      switch (direction) {
+        case 'U':
           h[1] += 1;
-          adjustT(t, h);
-          tHistory.add(t.join(','));
-        }
-        break;
-      case 'D':
-        for (let i = 0; i < length; i++) {
+          break;
+        case 'D':
           h[1] -= 1;
-          adjustT(t, h);
-          tHistory.add(t.join(','));
-        }
-        break;
-      case 'L':
-        for (let i = 0; i < length; i++) {
+          break;
+        case 'L':
           h[0] -= 1;
-          adjustT(t, h);
-          tHistory.add(t.join(','));
-        }
-        break;
-      case 'R':
-        for (let i = 0; i < length; i++) {
+          break;
+        case 'R':
           h[0] += 1;
-          adjustT(t, h);
-          tHistory.add(t.join(','));
-        }
-        break;
+          break;
+      }
+
+      adjustT(t, h);
+      tHistory.add(t.join(','));
     }
   }
 
@@ -107,47 +96,27 @@ export function countLongerTailPositions(input) {
   const tailHistory = new Set(['0,0']);
 
   for (const [direction, length] of input) {
-    switch (direction) {
-      case 'U':
-        for (let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
+      switch (direction) {
+        case 'U':
           h[1] += 1;
-          for (let j = 1, cnt = knots.length; j < cnt; j++) {
-            adjustT(knots[j], knots[j - 1]);
-          }
-
-          tailHistory.add(tail.join(','));
-        }
-        break;
-      case 'D':
-        for (let i = 0; i < length; i++) {
+          break;
+        case 'D':
           h[1] -= 1;
-          for (let j = 1, cnt = knots.length; j < cnt; j++) {
-            adjustT(knots[j], knots[j - 1]);
-          }
-
-          tailHistory.add(tail.join(','));
-        }
-        break;
-      case 'L':
-        for (let i = 0; i < length; i++) {
+          break;
+        case 'L':
           h[0] -= 1;
-          for (let j = 1, cnt = knots.length; j < cnt; j++) {
-            adjustT(knots[j], knots[j - 1]);
-          }
-
-          tailHistory.add(tail.join(','));
-        }
-        break;
-      case 'R':
-        for (let i = 0; i < length; i++) {
+          break;
+        case 'R':
           h[0] += 1;
-          for (let j = 1, cnt = knots.length; j < cnt; j++) {
-            adjustT(knots[j], knots[j - 1]);
-          }
+          break;
+      }
 
-          tailHistory.add(tail.join(','));
-        }
-        break;
+      for (let j = 1, cnt = knots.length; j < cnt; j++) {
+        adjustT(knots[j], knots[j - 1]);
+      }
+
+      tailHistory.add(tail.join(','));
     }
   }
 
