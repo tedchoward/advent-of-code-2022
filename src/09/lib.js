@@ -16,8 +16,6 @@ export function parseInput(input) {
  * @param {[number, number]} h
  */
 function adjustT(t, h) {
-  // const sameRowOrCol = t[0] === h[0] && t[1] === h[1];
-
   if (h[1] - t[1] > 1) {
     // Up
     t[1] += 1;
@@ -95,6 +93,63 @@ export function countTPositions(input) {
     }
   }
 
-  console.log(tHistory);
   return tHistory.size;
+}
+
+/**
+ *
+ * @param {[string, number][]} input
+ */
+export function countLongerTailPositions(input) {
+  const knots = new Array(10).fill(0).map(() => [0, 0]);
+  const h = knots[0];
+  const tail = knots[9];
+  const tailHistory = new Set(['0,0']);
+
+  for (const [direction, length] of input) {
+    switch (direction) {
+      case 'U':
+        for (let i = 0; i < length; i++) {
+          h[1] += 1;
+          for (let j = 1, cnt = knots.length; j < cnt; j++) {
+            adjustT(knots[j], knots[j - 1]);
+          }
+
+          tailHistory.add(tail.join(','));
+        }
+        break;
+      case 'D':
+        for (let i = 0; i < length; i++) {
+          h[1] -= 1;
+          for (let j = 1, cnt = knots.length; j < cnt; j++) {
+            adjustT(knots[j], knots[j - 1]);
+          }
+
+          tailHistory.add(tail.join(','));
+        }
+        break;
+      case 'L':
+        for (let i = 0; i < length; i++) {
+          h[0] -= 1;
+          for (let j = 1, cnt = knots.length; j < cnt; j++) {
+            adjustT(knots[j], knots[j - 1]);
+          }
+
+          tailHistory.add(tail.join(','));
+        }
+        break;
+      case 'R':
+        for (let i = 0; i < length; i++) {
+          h[0] += 1;
+          for (let j = 1, cnt = knots.length; j < cnt; j++) {
+            adjustT(knots[j], knots[j - 1]);
+          }
+
+          tailHistory.add(tail.join(','));
+        }
+        break;
+    }
+  }
+
+  return tailHistory.size;
 }
