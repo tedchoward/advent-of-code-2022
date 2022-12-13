@@ -22,9 +22,7 @@ function compareValues(left, right) {
     }
 
     if (left > right) {
-      debug(
-        'Right side is smaller, so inputs are not in the right order'
-      );
+      debug('Right side is smaller, so inputs are not in the right order');
       return false;
     }
 
@@ -53,9 +51,7 @@ function compareValues(left, right) {
     // If the left list runs out of items first, the inputs are in the right
     //     order.
     if (left.length < right.length) {
-      debug(
-        'Left side ran out of items, so inputs are in the right order'
-      );
+      debug('Left side ran out of items, so inputs are in the right order');
       return true;
     }
     // If the lists are the same length and no comparison makes a decision
@@ -66,9 +62,7 @@ function compareValues(left, right) {
   // If exactly one value is an integer, convert the integer to a list which
   //     contains that integer as its only value, then retry the comparison.
   if (Array.isArray(left) && typeof right === 'number') {
-    debug(
-      `Mixed types; convert right to [${right}] and retry comparison`
-    );
+    debug(`Mixed types; convert right to [${right}] and retry comparison`);
     return compareValues(left, [right]);
   } else if (typeof left === 'number' && Array.isArray(right)) {
     debug(`Mixed types; convert left to [${left}] and retry comparison`);
@@ -81,11 +75,9 @@ function compareValues(left, right) {
  * @param {(number|number[])[][]} input
  */
 export function countCorrectPackets(input) {
-  // debug(JSON.stringify(input));
   let correctIndicies = [];
   for (let i = 0, cnt = input.length; i < cnt; i++) {
     const [left, right] = input[i];
-    // const correct = isCorrectOrder(left, right);
     const correct = compareValues(left, right);
 
     if (correct !== false) {
@@ -94,4 +86,23 @@ export function countCorrectPackets(input) {
   }
 
   return correctIndicies.reduce((a, b) => a + b, 0);
+}
+
+/**
+ *
+ * @param {(number|number[])[][]} input
+ */
+export function findDecoderKey(input) {
+  const key1 = [[2]];
+  const key2 = [[6]];
+
+  const sorted = [...input.flatMap((x) => x), key1, key2].sort((a, b) => {
+    if (compareValues(a, b)) {
+      return -1;
+    }
+
+    return 1;
+  });
+
+  return (sorted.indexOf(key1) + 1) * (sorted.indexOf(key2) + 1);
 }

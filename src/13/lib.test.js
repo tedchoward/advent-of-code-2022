@@ -1,4 +1,4 @@
-import { countCorrectPackets, parseInput } from './lib.js';
+import { countCorrectPackets, findDecoderKey, parseInput } from './lib.js';
 
 const testData = `[1,1,3,1,1]
 [1,1,5,1,1]
@@ -29,5 +29,13 @@ describe('countCorrectPackets', () => {
     const parsedInput = parseInput(testData);
     const result = countCorrectPackets(parsedInput);
     expect(result).toBe(13);
+  });
+});
+
+describe('findDecoderKey', () => {
+  it('returns the decoder key for the signal', () => {
+    const parsedInput = parseInput(testData);
+    const result = findDecoderKey(parsedInput);
+    expect(result).toBe(140);
   });
 });
